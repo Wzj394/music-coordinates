@@ -188,7 +188,7 @@ insufficient.
 
 \subsection{Why this is a coordinate problem}
 
-Push the analogy towards physical measurement: ``the third centimetre of the second
+Push the analogy towards physical measurement: ``the $3$rd centimetre of the $2$nd
 meter'' is well defined --- the ruler is fixed, and anyone measuring at any time
 obtains the same result. Musical notation is not like that: ``bar $2$, beat $3$''
 denotes a different tick length under $4/4$ and under $6/8$.
@@ -971,7 +971,7 @@ changes. Table \ref{tab:domain} compares three classes of scenario.
 \midrule
 A single time signature & correct & correct (degenerate equivalence) & either one \\
 A few meter changes & fails & correct & the general form \\
-Ban-shi change / free meter (sanban) / dense meter change & fails & fails & a time-signature event table $+$ binary search \\
+Ban-shi change / free meter (sanban) / dense meter change & fails & fails & a time-signature event table + binary search \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1355,7 +1355,7 @@ continuity (\ref{subsec:line}).
 On the vertical axis a four-part choir (SATB) usually has a clear stratification of
 registers. Let $Y'$ be the vertical coordinate after octave normalisation; then a
 single simple threshold suffices for the coarse partition: $Y'$ above the threshold
-goes to the upper voice, $Y'$ below it to the lower voice.
+goes to the upper voice, and those below the threshold to the lower voice.
 
 Take a passage of piano music as an example: the right-hand melody lies in the
 middle-high register and the left-hand accompaniment in the middle-low register. With
@@ -1558,8 +1558,7 @@ structures, and the recursion can proceed indefinitely.
 By induction on the number of layers $k$. Base case $k=1$: a single section satisfies
 $S_A=\sum_j s_{aj}$ by itself, that is, one section can be divided into several
 subsections. Inductive step: assume the $k$-th layer holds, that is
-$p_i=\sum_j p_{ij}$; then repeating the same argument for each $p_{ij}$ gives the
-$(k+1)$-th layer. Hence one can recurse from the division of a movement down to
+$p_i=\sum_j p_{ij}$; then repeating the same argument for each $p_{ij}$ gives layer $k+1$. Hence one can recurse from the division of a movement down to
 periods, phrases and motives, and finally to individual notes.
 \end{proof}
 
@@ -1925,7 +1924,7 @@ bar $1$. In the model's words: this is not ``the melody of bar $1$'' but ``a com
 musical sentence''; \textbf{the boundary of a melody is not the barline but the point
 where the vertical value changes}.
 
-\textbf{(iv) Pitch layout.} The range of the reference sample is C4--E6 (two octaves $+$
+\textbf{(iv) Pitch layout.} The range of the reference sample is C4--E6 (two octaves +
 a major third), dense in the high register, with the chromatic note G\#5 appearing in
 bar $14$; the range of the model output is C4--C6, entirely diatonic.
 
@@ -1939,9 +1938,9 @@ bar $14$; the range of the model output is C4--C6, entirely diatonic.
 \toprule
 \thd{Dimension} & \thd{Model output} & \thd{Reference sample} \\
 \midrule
-Duration diversity & uniform (quarter $+$ half) & rich (dotted, eighth, non-standard durations) \\
-Phrase structure & divided by barlines & cross-bar motifs $+$ phrase hierarchy \\
-Pitch layout & symmetrical and regular & arch shape $+$ high-register breakthrough $+$ chromatic notes \\
+Duration diversity & uniform (quarter + half) & rich (dotted, eighth, non-standard durations) \\
+Phrase structure & divided by barlines & cross-bar motifs + phrase hierarchy \\
+Pitch layout & symmetrical and regular & arch shape + high-register breakthrough + chromatic notes \\
 Rhythmic subdivision & none & several dotted and eighth-note transitions \\
 Mathematical precision & standard durations only & every non-standard duration can be converted exactly into ticks \\
 \bottomrule

@@ -1,0 +1,407 @@
+%% ===========================================================================
+%%  musepaper.sty  ·  学术论文版式   v1.0
+%% ---------------------------------------------------------------------------
+%%  与 musetheme.sty（报告 / 教程风）的区别 —— 针对「草台感」逐条下药：
+%%
+%%   1. 密度。学术排版靠「首行缩进」分段，不靠空行。
+%%      → 行距 11pt 类 × 1.12、段间距归零、仅保留 2 汉字缩进。
+%%        （musetheme 是 1.26 倍行距 + 0.35em 段距，那是博客/讲义的做法。）
+%%
+%%   2. 去框。彩色提示框是「公众号体」的典型特征，论文里不该出现。
+%%      → 改用无框的定理类环境：定理 / 引理 / 推论 / 命题 / 定义 / 注记 / 观察。
+%%
+%%   3. 语气。正文用「本文」，不用「我」；过程叙述移入附录。
+%%
+%%   4. 图表。表格统一小一号、行距收紧；图注改短、改陈述式。
+%%
+%%   5. 学术构件。作者块 / 摘要 / 关键词 / 参考文献（手写 thebibliography，
+%%      零宏包依赖，适配 MiKTeX 精简安装）。
+%%
+%%  单栏 / 双栏自动适配：主题会探测 \if@twocolumn 并据此设置版心。
+%%      单栏：\documentclass[11pt,a4paper,fontset=none]{ctexart}
+%%      双栏：\documentclass[11pt,a4paper,twocolumn,fontset=none]{ctexart}
+%% ===========================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{musepaper}[2026/09/13 v1.0 Muse academic paper theme]
+
+% ===========================================================================
+% 0.  可调旋钮
+% ===========================================================================
+%  行距倍数。学术密度默认 1.12；调大更松、调小更紧（1.05 已接近极限）。
+\newcommand{\museStretch}{1.12}
+%  图注分隔符样式：保留参考论文的「图 N | 说明」竖线家族脸。
+%  想要中文期刊常见的「图 N 说明」（无竖线），把下面改成 \relax
+\newcommand{\museCaptionBar}{\enspace\textbar\enspace}
+%  主题色（仅用于链接与代码关键字；正文与标题一律黑）
+\newcommand{\museBlueHTML}{1F4E79}
+
+% ===========================================================================
+% 1.  字体系统（与 musetheme 同一套，已在本机实测通过）
+% ===========================================================================
+\RequirePackage{fontspec}
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+
+% 西文正文：TeX Gyre Pagella（= URW Palladio L / Palatino 的 OpenType 正统版）
+% 装在 MiKTeX 树里，故必须按文件名加载
+\setmainfont{texgyrepagella-regular.otf}[
+  BoldFont       = texgyrepagella-bold.otf,
+  ItalicFont     = texgyrepagella-italic.otf,
+  BoldItalicFont = texgyrepagella-bolditalic.otf,
+  Ligatures      = TeX,
+]
+\setmathfont{texgyrepagella-math.otf}
+
+% 西文无衬线（标题里的西文、图表标签）
+\setsansfont{Lato}[
+  Extension = .ttf, Path = C:/Windows/Fonts/,
+  UprightFont = *-Regular, BoldFont = *-Bold,
+  ItalicFont = *-Italic, BoldItalicFont = *-BoldItalic,
+]
+
+% 中文正文：思源宋体
+% 本机只装了变量字体 NotoSerifSC-VF.ttf（wght 轴 200–900），而 XeLaTeX 不支持
+% 变量轴、只能取默认实例，所以过去只能用 AutoFakeBold 合成——那是**伪粗**，
+% 在学术排版里是个破绽。tools/make_static_instances.py 已从该变量字体抽出
+% 静态的 400/700 两个字重放入 fonts/，此处直接引用，粗体为**真粗体**。
+% 路径相对编译目录（compile.bat 会先 cd 到项目根）。
+%  字体目录：默认 fonts/（相对编译目录）。
+%  使用方可在 \usepackage 之前写 \renewcommand{\museFontPath}{../fonts/}
+%  以指向共享字体目录（多篇论文共用一个 fonts/ 时用）。
+\providecommand{\museFontPath}{fonts/}
+\setCJKmainfont{NotoSerifSC-Regular.ttf}[
+  Path          = \museFontPath,
+  BoldFont      = NotoSerifSC-Bold.ttf,
+  ItalicFont    = NotoSerifSC-Regular.ttf,
+  AutoFakeSlant = 0.167,
+]
+% 中文标题：思源黑体
+\setCJKsansfont{Noto Sans SC}[
+  BoldFont = {Noto Sans SC Bold}, ItalicFont = {Noto Sans SC},
+]
+% 代码等宽：Consolas
+\setmonofont{consola.ttf}[
+  Path = C:/Windows/Fonts/, BoldFont = consolab.ttf,
+  ItalicFont = consolai.ttf, BoldItalicFont = consolaz.ttf, Scale = 0.90,
+]
+% 中式等宽：SimSun —— 汉字 1em / 西文 0.5em，天然 1:2，ASCII 示意图靠它对齐
+\setCJKmonofont{SimSun}[AutoFakeSlant=0.167]
+\newfontfamily\musegridfont{SimSun}
+
+% ---- 中文排版细节：标点挤压与中西文间距 ----
+%  PunctStyle=kaiming 是中文书籍与论文的经典做法（开明式）：
+%  句末标点用全角、句中标点半角，并允许标点压缩，
+%  避免「。，、」各占整格而在行面里形成稀疏的空洞。
+%  中西文之间的间距由 xeCJK 自动插入，默认略宽；此处收紧到 0.22em，
+%  使中英混排的行面更均匀。
+\xeCJKsetup{
+  PunctStyle = kaiming,
+  CJKecglue  = {\hskip 0.22em plus 0.06em minus 0.06em},
+  CheckSingle = true,
+}
+
+% ===========================================================================
+% 2.  页面几何 —— 单栏对齐参考论文实测值；双栏自动收紧
+% ===========================================================================
+\RequirePackage{geometry}
+\if@twocolumn
+  % 双栏：栏宽约 8.3cm，中文每行 25 字上下，接近中文期刊的观感
+  \geometry{a4paper, left=2.05cm, right=2.05cm, top=2.70cm, bottom=2.55cm,
+            columnsep=0.74cm, footskip=1.00cm}
+\else
+  % 单栏：与《DeepSeek-V4.1-Flash》技术报告实测值一致
+  %   左边距 70.41pt / 右边距 68.96pt / 版心宽 455.91pt / 首行字形顶 88.2pt
+  %   top 取 3.09cm 而非 3.02cm：学术版行距更紧（1.12），首行行盒更矮，
+  %   故需略微下压，实测后首行字形顶正好落在 88.2pt。
+  \geometry{a4paper, left=2.48cm, right=2.43cm, top=3.09cm, bottom=2.98cm,
+            footskip=1.03cm}
+\fi
+
+% ===========================================================================
+% 3.  密度 —— 学术排版的命门
+% ===========================================================================
+\linespread{\museStretch}
+\setlength{\parindent}{2\ccwd}     % 首行缩进两汉字
+\setlength{\parskip}{0pt}          % 段间距归零：靠缩进分段，不靠空行
+\RequirePackage{microtype}
+\RequirePackage{etoolbox}
+%  列表宏包 —— 必须有！否则 \begin{enumerate}[leftmargin=...] 的可选参数不被支持，
+%  列表建不起来，每个 \item 都会报 `Something's wrong--perhaps a missing \item`。
+\RequirePackage{enumitem}
+
+% ===========================================================================
+% 3b. 间距体系 —— 学术排版里，间距往往比字号更决定观感
+% ===========================================================================
+%  浮动体与正文（11pt 类 LaTeX 默认偏松；中文行面更密，宜收紧）
+\setlength{\floatsep}{11pt plus 2pt minus 2pt}       % 同页两个浮动体之间
+\setlength{\textfloatsep}{13pt plus 3pt minus 3pt}   % 页顶/页底浮动体与正文
+\setlength{\intextsep}{11pt plus 2pt minus 2pt}      % 文中浮动体上下
+
+%  公式与上下文（默认 abovedisplayskip = 12pt，对密排中文偏松）
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{7pt plus 2pt minus 2pt}%
+  \setlength{\belowdisplayskip}{7pt plus 2pt minus 2pt}%
+  \setlength{\abovedisplayshortskip}{4pt plus 1pt minus 1pt}%
+  \setlength{\belowdisplayshortskip}{4pt plus 1pt minus 1pt}%
+}
+
+%  脚注：分隔线取 40% 宽、0.4pt 细线（学术惯例），并收紧与正文的距离
+\setlength{\skip\footins}{11pt plus 2pt minus 2pt}
+\AtBeginDocument{%
+  \renewcommand{\footnoterule}{%
+    \vspace*{-3pt}\rule{0.4\columnwidth}{0.4pt}\vspace*{2.6pt}}%
+}
+
+%  断行与孤行控制：避免标题落单在页尾、段首行落单在页尾
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\setlength{\emergencystretch}{1.2em}
+
+% ===========================================================================
+% 4.  标题体系 —— 比报告风更克制、更紧
+% ===========================================================================
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage{xcolor}
+\definecolor{museBlue}{HTML}{\museBlueHTML}
+\definecolor{museDiary}{HTML}{7A6A55}
+
+\titleformat{\section}
+  {\sffamily\bfseries\fontsize{13.5}{16}\selectfont}{\thesection.}{0.5em}{}
+\titleformat{\subsection}
+  {\sffamily\bfseries\fontsize{12}{14.5}\selectfont}{\thesubsection.}{0.45em}{}
+\titleformat{\subsubsection}
+  {\sffamily\bfseries\fontsize{11}{13.5}\selectfont}{\thesubsubsection.}{0.4em}{}
+\titleformat{\paragraph}[runin]
+  {\sffamily\bfseries}{}{0pt}{}[~]
+
+% 学术排版：标题上方留白略大于下方，形成「吸附」关系
+\titlespacing*{\section}{0pt}{1.9ex plus .8ex minus .2ex}{0.85ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1.5ex plus .7ex minus .2ex}{0.65ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{1.15ex plus .6ex minus .2ex}{0.5ex plus .2ex}
+
+\titlecontents{section}[0pt]
+  {\addvspace{0.35em}\sffamily\bfseries}
+  {\thecontentslabel.\quad}{}{\titlerule*[0.55pc]{.}\contentspage}
+\titlecontents{subsection}[1.5em]
+  {\sffamily\small}
+  {\thecontentslabel.\quad}{}{\titlerule*[0.55pc]{.}\contentspage}
+\titlecontents{subsubsection}[3.2em]
+  {\sffamily\footnotesize}
+  {\thecontentslabel.\quad}{}{\titlerule*[0.55pc]{.}\contentspage}
+
+% ===========================================================================
+% 5.  定理类环境 —— 无框、无底色，论文的标准做法
+% ===========================================================================
+\RequirePackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{musethm}{定理}[section]
+\newtheorem{muselmm}[musethm]{引理}
+\newtheorem{musecor}[musethm]{推论}
+\newtheorem{museprop}[musethm]{命题}
+\theoremstyle{definition}
+\newtheorem{musedefn}[musethm]{定义}
+\newtheorem{museex}[musethm]{例}
+\theoremstyle{remark}
+\newtheorem{muserem}[musethm]{注记}
+\newtheorem{museobs}[musethm]{观察}
+
+\newenvironment{定理}[1][]{\begin{musethm}[#1]}{\end{musethm}}
+\newenvironment{引理}[1][]{\begin{muselmm}[#1]}{\end{muselmm}}
+\newenvironment{推论}[1][]{\begin{musecor}[#1]}{\end{musecor}}
+\newenvironment{命题}[1][]{\begin{museprop}[#1]}{\end{museprop}}
+\newenvironment{定义}[1][]{\begin{musedefn}[#1]}{\end{musedefn}}
+\newenvironment{例}[1][]{\begin{museex}[#1]}{\end{museex}}
+\newenvironment{注记}[1][]{\begin{muserem}[#1]}{\end{muserem}}
+\newenvironment{观察}[1][]{\begin{museobs}[#1]}{\end{museobs}}
+\renewcommand{\proofname}{\sffamily\bfseries 证明}
+
+% ===========================================================================
+% 6.  图表 —— 小一号、更紧、图注陈述化
+% ===========================================================================
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{caption}
+
+\DeclareCaptionLabelSeparator{museBar}{\museCaptionBar}
+\captionsetup{
+  font           = {sf, small},
+  labelfont      = bf,
+  labelsep       = museBar,
+  justification  = justified,
+  singlelinecheck = false,
+  skip           = 5pt,
+}
+\captionsetup[figure]{position=below, skip=5pt}
+\captionsetup[table]{position=above, skip=6pt}
+
+%  三线表线宽显式设定（booktabs 默认 0.08em / 0.05em，
+%  学术三线表惯例是上下列线略粗、中线更细）
+\setlength{\heavyrulewidth}{1.0pt}    % \toprule 与 \bottomrule
+\setlength{\lightrulewidth}{0.5pt}    % \midrule
+\setlength{\cmidrulewidth}{0.4pt}
+
+% 表格统一小一号 + 收紧行距（\arraystretch 必须全局设，放钩子里太晚）
+\renewcommand{\arraystretch}{1.15}
+\AtBeginEnvironment{tabular}{\small}
+\AtBeginEnvironment{tabularx}{\small}
+\AtBeginEnvironment{longtable}{\small}
+\newcommand{\thd}[1]{\textsf{\textbf{#1}}}
+
+% ===========================================================================
+% 7.  超链接（关闭参考论文那个彩色边框）
+% ===========================================================================
+\RequirePackage[hidelinks,bookmarksnumbered]{hyperref}
+
+% ===========================================================================
+% 8.  学术构件：中文期刊投稿体例
+% ---------------------------------------------------------------------------
+%  体例约定（两份论文统一）：
+%    · 题名 / 作者 / 单位 / 通信邮箱 居中成块，不分页
+%    · 摘要与关键词用**行内标签**（「摘　要：」紧跟正文），不用居中标题
+%    · 中图分类号与文献标识码紧随关键词
+%    · 再排英文题名 / 英文作者 / 英文单位 / Abstract / Key words
+% ===========================================================================
+
+%  在 \centering 环境（如 titlepage）内部强制左对齐的工具。
+%  坑：\centering 会把 \leftskip/\rightskip 设成 0pt plus 1fil，
+%      此时 \noindent **压不住**它，摘要标签仍会被居中。
+%      必须显式复位这两个 skip 与 \parfillskip。
+\newcommand{\museFlushLeft}{%
+  \leftskip=0pt \rightskip=0pt \parfillskip=0pt plus 1fil\relax}
+
+%  摘要：行内标签体例。标签用黑体并与正文之间留一个全角空格
+\newenvironment{摘要}{%
+  \par\vspace{0.35em}%
+  \begingroup\small\museFlushLeft\setlength{\parindent}{2\ccwd}%
+  \noindent{\sffamily\bfseries 摘\quad 要：}\ignorespaces
+}{%
+  \par\endgroup\vspace{0.3em}%
+}
+
+%  关键词（行内标签，与摘要同一体例）
+\newcommand{\关键词}[1]{%
+  \par\vspace{0.1em}\begingroup\museFlushLeft\noindent
+  {\sffamily\bfseries 关键词：}#1\par\endgroup\vspace{0.2em}%
+}
+
+%  中图分类号 / 文献标识码（中文期刊投稿必备）
+\newcommand{\中图分类号}[1]{%
+  \par\vspace{0.1em}\begingroup\museFlushLeft\noindent
+  {\sffamily\bfseries 中图分类号：}#1\par\endgroup}
+\newcommand{\文献标识码}[1]{%
+  \par\vspace{0.05em}\begingroup\museFlushLeft\noindent
+  {\sffamily\bfseries 文献标识码：}#1\par\endgroup\vspace{0.25em}}
+
+%  通信邮箱 / 单位（题名块用）
+\newcommand{\通信邮箱}[1]{\par\vspace{0.1em}\noindent
+  \begin{center}{\small 通信邮箱：#1}\end{center}\par}
+\newcommand{\作者单位}[1]{\par\vspace{0.15em}\noindent
+  \begin{center}{\small #1}\end{center}\par}
+
+%  作者块（居中两行：姓名 / 单位）
+\newcommand{\作者块}[2]{%
+  \begin{center}
+    {\normalsize #1}\\[0.3em]
+    {\small #2}
+  \end{center}%
+}
+
+%  英文题名 / 作者 / 单位（Times 系，居中）
+\newcommand{\英文题名}[1]{%
+  \par\vspace{0.75em}%
+  \begin{center}{\bfseries\fontsize{12}{15}\selectfont #1}\end{center}%
+  \vspace{0.15em}}
+\newcommand{\英文作者}[1]{%
+  \begin{center}{\normalsize #1}\end{center}\vspace{0.1em}}
+\newcommand{\英文单位}[1]{%
+  \begin{center}{\small #1}\end{center}\vspace{0.25em}}
+
+%  英文摘要：与中文摘要同体例（行内标签）
+\newenvironment{英文摘要}{%
+  \par\vspace{0.2em}%
+  \begingroup\small\museFlushLeft\setlength{\parindent}{0pt}%
+  \noindent{\bfseries Abstract: }\ignorespaces
+}{%
+  \par\endgroup\vspace{0.25em}%
+}
+\newcommand{\英文关键词}[1]{%
+  \par\vspace{0.1em}\begingroup\museFlushLeft\noindent
+  {\bfseries Key words: }#1\par\endgroup\vspace{0.35em}%
+}
+
+%  参考文献：手写 thebibliography，零宏包依赖
+%  注意：AtBeginEnvironment 的钩子在 thebibliography 内部的 \list 之前执行，
+%        所以这里只能改字体/段距，绝不能设 \itemsep、\labelwidth 等列表参数，
+%        否则会报 `Something's wrong--perhaps a missing \item`。
+\AtBeginEnvironment{thebibliography}{\small\setlength{\parskip}{0pt}}
+\renewcommand{\refname}{\sffamily\bfseries\fontsize{13.5}{16}\selectfont 参考文献}
+
+%  术语：西文走斜体
+\newcommand{\term}[1]{\textit{#1}}
+
+% ===========================================================================
+% 9.  可选：继续沿用报告风的两个组件（默认不鼓励，但保留）
+% ===========================================================================
+\RequirePackage[most]{tcolorbox}
+
+%  摘录块：仅一条细左线，无底色、无标题条 —— 论文附录里引原始材料的做法。
+%  日期/标题请写在块内首行，用 \textbf{} 做行内引导，而不是做成标题条。
+\newtcolorbox{引述}[1][]{
+  enhanced, breakable,
+  colback = white, colframe = black!30,
+  boxrule = 0pt, leftrule = 1pt,
+  arc = 0pt, outer arc = 0pt,
+  left = 9pt, right = 6pt, top = 5pt, bottom = 5pt,
+  fontupper = \small,
+  #1
+}
+%  代码
+\RequirePackage{listings}
+\lstdefinestyle{musepaper}{
+  basicstyle = \ttfamily\small,
+  keywordstyle = \color{museBlue}\bfseries,
+  commentstyle = \color{black!45}\itshape,
+  stringstyle = \color{teal!70!black},
+  numbers = left, numberstyle = \tiny\color{black!35}, numbersep = 7pt,
+  frame = single, framerule = 0.4pt, rulecolor = \color{black!25},
+  breaklines = true, showstringspaces = false, tabsize = 2,
+  columns = fullflexible, keepspaces = true,
+  xleftmargin = 1.3em, framexleftmargin = 1.3em,
+}
+\lstnewenvironment{museCode}[1][]{\lstset{style=musepaper,#1}}{}
+
+%  示意图：SimSun 等宽，保证 ASCII 图 1:2 对齐
+\RequirePackage{fancyvrb}
+\newenvironment{示意图}
+  {\VerbatimEnvironment
+   \begin{Verbatim}[frame=single, framerule=0.4pt, rulecolor=\color{black!25},
+                    framesep=5pt, fontsize=\small,
+                    formatcom=\musegridfont, baselinestretch=1.0]}
+  {\end{Verbatim}}
+
+% ===========================================================================
+% 10. 页眉与页码：中文期刊投稿体例 —— 页眉居中排题名，页码底部居中
+% ---------------------------------------------------------------------------
+%  页眉从第 2 页起出现（题名页不留页眉，这是投稿稿件的通行做法）。
+\RequirePackage{fancyhdr}
+\newcommand{\museRunningHead}{}
+\newcommand{\页眉}[1]{\renewcommand{\museRunningHead}{#1}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small\sffamily\museRunningHead}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%  题名页（第 1 页）用 plain，只有页码、无页眉
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+\endinput

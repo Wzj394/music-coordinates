@@ -1,0 +1,228 @@
+%% ===========================================================================
+%%  musepaper-en.sty  ·  English academic layout  ·  v1.0
+%% ---------------------------------------------------------------------------
+%%  English counterpart of musepaper.sty.
+%%
+%%  Design decisions carried over from the Chinese original (musepaper.sty):
+%%    1. DENSITY. Academic typesetting separates paragraphs by first-line
+%%       indent, not by blank lines.  -> linespread 1.12, parskip 0pt,
+%%       keep the first-line indent.
+%%    2. NO BOXES. Coloured callout boxes read as blog/marketing typography;
+%%       they do not belong in a paper.  -> plain theorem-like environments.
+%%    3. VOICE. "This paper", never "I".  Process narrative goes to an appendix.
+%%    4. FIGURES/TABLES. Tables one size down, tightened leading; short
+%%       declarative captions.
+%%    5. ACADEMIC KIT. Author block / abstract / keywords / a hand-written
+%%       thebibliography (zero package dependencies, works on a minimal
+%%       MiKTeX install).
+%%
+%%  What is DIFFERENT from the Chinese original:
+%%    - No CJK machinery at all.  ctex, xeCJK, \setCJKmainfont and the
+%%      generated Noto Serif SC static font instances are all dropped.
+%%      This means the English sources compile out of the box, without
+%%      running tools/make_static_instances.py first.
+%%    - Environment names are English (theorem, lemma, corollary, ...).
+%%      See tools/glossary-en.md §7 for the full mapping.
+%%
+%%  Compile: xelatex paper.en.tex   (run three times for cross-references)
+%% ===========================================================================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{musepaper-en}[2026/10/13 v1.0 English academic layout for MATCS]
+
+% ---------------------------------------------------------------------------
+% 0.  Knobs (same names as the Chinese original, so papers can override them)
+% ---------------------------------------------------------------------------
+\newcommand{\museStretch}{1.12}
+\newcommand{\museCaptionBar}{\enspace\textbar\enspace}
+\newcommand{\museBlueHTML}{1F4E79}
+\newcommand{\museRunningHead}{}
+\newcommand{\runninghead}[1]{\renewcommand{\museRunningHead}{#1}}
+
+% ---------------------------------------------------------------------------
+% 1.  Fonts -- Latin and math only.  TeX Gyre Pagella matches the Latin face
+%     used by the Chinese original, so the two versions look like siblings.
+% ---------------------------------------------------------------------------
+\RequirePackage{fontspec}
+\RequirePackage{mathtools}
+\RequirePackage{unicode-math}
+
+\setmainfont{texgyrepagella-regular.otf}[
+  BoldFont       = texgyrepagella-bold.otf,
+  ItalicFont     = texgyrepagella-italic.otf,
+  BoldItalicFont = texgyrepagella-bolditalic.otf,
+]
+\setmathfont{texgyrepagella-math.otf}
+
+\setmonofont{consola.ttf}[
+  Path = C:/Windows/Fonts/, BoldFont = consolab.ttf,
+  ItalicFont = consolai.ttf, BoldItalicFont = consolaz.ttf, Scale = 0.90,
+]
+
+% ---------------------------------------------------------------------------
+% 2.  Page geometry -- single column matches the Chinese original's measured
+%     values; two column tightens automatically.
+% ---------------------------------------------------------------------------
+\RequirePackage{geometry}
+\if@twocolumn
+  \geometry{a4paper, left=2.05cm, right=2.05cm, top=2.70cm, bottom=2.55cm,
+            columnsep=0.74cm, footskip=1.00cm}
+\else
+  \geometry{a4paper, left=2.48cm, right=2.43cm, top=3.09cm, bottom=2.98cm,
+            footskip=1.03cm}
+\fi
+
+% ---------------------------------------------------------------------------
+% 3.  Density
+% ---------------------------------------------------------------------------
+\linespread{\museStretch}
+\setlength{\parindent}{1.5em}      % English convention (the original used 2 CJK em)
+\setlength{\parskip}{0pt}
+\RequirePackage{microtype}
+\RequirePackage{etoolbox}
+\RequirePackage{enumitem}
+
+% ---------------------------------------------------------------------------
+% 3a. Graphics -- required for \graphicspath and \includegraphics.
+%     (The compile test caught this: without graphicx, \graphicspath is
+%      an undefined control sequence and the build aborts before page 1.)
+% ---------------------------------------------------------------------------
+\RequirePackage{graphicx}
+
+% ---------------------------------------------------------------------------
+% 3b. Spacing system
+% ---------------------------------------------------------------------------
+\setlength{\floatsep}{11pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}{13pt plus 3pt minus 3pt}
+\setlength{\intextsep}{11pt plus 2pt minus 2pt}
+
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{7pt plus 2pt minus 2pt}%
+  \setlength{\belowdisplayskip}{7pt plus 2pt minus 2pt}%
+  \setlength{\abovedisplayshortskip}{4pt plus 1pt minus 1pt}%
+  \setlength{\belowdisplayshortskip}{4pt plus 1pt minus 1pt}%
+}
+
+\setlength{\skip\footins}{11pt plus 2pt minus 2pt}
+\AtBeginDocument{%
+  \renewcommand{\footnoterule}{%
+    \vspace*{-3pt}\rule{0.4\columnwidth}{0.4pt}\vspace*{2.6pt}}%
+}
+
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\setlength{\emergencystretch}{1.2em}
+
+% ---------------------------------------------------------------------------
+% 4.  Headings -- more restrained and tighter than a report style
+% ---------------------------------------------------------------------------
+\RequirePackage{titlesec}
+\RequirePackage{xcolor}
+\definecolor{museBlue}{HTML}{\museBlueHTML}
+
+\titleformat{\section}
+  {\sffamily\bfseries\fontsize{15}{18}\selectfont}{\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\sffamily\bfseries\fontsize{13}{16}\selectfont}{\thesubsection}{0.55em}{}
+\titleformat{\subsubsection}
+  {\sffamily\bfseries\fontsize{11.5}{14}\selectfont}{\thesubsubsection}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{16pt plus 3pt minus 2pt}{8pt plus 2pt minus 2pt}
+\titlespacing*{\subsection}{0pt}{13pt plus 2pt minus 2pt}{6pt plus 1pt minus 1pt}
+\titlespacing*{\subsubsection}{0pt}{11pt plus 2pt minus 2pt}{5pt plus 1pt minus 1pt}
+
+% ---------------------------------------------------------------------------
+% 5.  Theorem-like environments (English names)
+%     Mapping from the Chinese original is in tools/glossary-en.md §7.
+% ---------------------------------------------------------------------------
+\RequirePackage{amsthm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\proofname}{\sffamily\bfseries Proof}
+% NOTE: do NOT redefine \qedsymbol here.  unicode-math takes over the math
+% symbol tables, so amssymb's \square is unavailable; a naive
+% \renewcommand{\qedsymbol}{\ensuremath{\square}} fails with
+% "Undefined control sequence" at every \end{proof}.
+% amsthm's own default (\openbox) is correct and needs no override.
+% Caught by the compile test.
+
+% ---------------------------------------------------------------------------
+% 6.  Tables -- one size down, tightened leading
+% ---------------------------------------------------------------------------
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{multirow}
+\renewcommand{\arraystretch}{1.15}
+\newcommand{\thd}[1]{\textsf{\textbf{#1}}}     % table header cell
+
+% ---------------------------------------------------------------------------
+% 7.  Title page kit
+% ---------------------------------------------------------------------------
+\newcommand{\keywords}[1]{%
+  \par\vspace{0.6em}\noindent
+  {\sffamily\bfseries Keywords:\ }#1\par}
+
+\newcommand{\affiliation}[1]{\par\vspace{0.15em}\noindent
+  {\small #1}}
+
+\newcommand{\authorblock}[2]{%
+  \par\vspace{0.5em}\noindent
+  {\large\sffamily\bfseries #1}\par
+  \vspace{0.1em}\noindent{\small #2}\par}
+
+% English version: no separate English abstract block is needed, since the
+% whole paper is English.  Provide the environment for source compatibility.
+\newenvironment{abstracten}{%
+  \par\vspace{0.8em}\noindent
+  {\sffamily\bfseries Abstract.\ }\ignorespaces
+}{\par\vspace{0.6em}}
+
+% ---------------------------------------------------------------------------
+% 8.  Term markup and running head
+% ---------------------------------------------------------------------------
+\newcommand{\term}[1]{\textit{#1}}
+
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[C]{\small\sffamily\museRunningHead}
+\fancyfoot[C]{\small\thepage}
+
+% schematic-figure environment (the Chinese original's 示意图)
+\newenvironment{schematic}[1][Schematic]{%
+  \par\vspace{0.6em}\noindent
+  \begin{minipage}{\linewidth}\centering
+  \small\sffamily\textbf{#1}\par\vspace{0.3em}
+}{%
+  \end{minipage}\par\vspace{0.6em}
+}
+
+% ---------------------------------------------------------------------------
+% 9.  Float tuning
+% ---------------------------------------------------------------------------
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.75}
+
+\endinput

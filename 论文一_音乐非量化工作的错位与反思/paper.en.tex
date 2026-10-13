@@ -1,0 +1,542 @@
+% !TeX program = xelatex
+% ===========================================================================
+%  Dislocation and Reflection on the ``Non-Quantifiable'' Work of Music
+%   -- English version; layout supplied uniformly by musepaper-en.sty
+%
+%  Compile: xelatex paper.en.tex   (three passes for cross-references)
+% ===========================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{musepaper-en}
+
+% Running head
+\runninghead{Dislocation and Reflection on the ``Non-Quantifiable'' Work of Music}
+
+\title{Dislocation and Reflection on the ``Non-Quantifiable'' Work of Music}
+\author{WANG Zijian}
+\date{}
+
+%% ---------------------------------------------------------------------------
+%%  Citation practice (per the documentation standard of the Journal of the
+%%  Central Conservatory of Music): all cited literature appears in page
+%%  footnotes, with no reference list appended at the end of the paper.  The
+%%  original \begin{thebibliography} has therefore been replaced by \footnote
+%%  at each point of citation.
+%%  NOTE: the standard requires the cited page number; wherever 【待核】 /
+%%  【X】 appeared in the Chinese source it is preserved verbatim below as
+%%  [to be verified] / [X], since no edition was available to check it against.
+%% ---------------------------------------------------------------------------
+\begin{document}
+
+% The title page carries neither running head nor page number (standard
+% practice for journal submissions); page numbers begin on page 2.
+
+% ===========================================================================
+% Title page
+% ===========================================================================
+\begin{center}
+  {\sffamily\bfseries\fontsize{17}{21}\selectfont
+   Dislocation and Reflection on the ``Non-Quantifiable'' Work of Music\par}
+  \vspace{0.9em}
+  {\normalsize WANG Zijian\par}
+  \vspace{0.35em}
+  {\small (MozunStudio, Hefei 230000, Anhui, China)\par}
+  \vspace{0.25em}
+  {\small Correspondence: 368164331@qq.com\par}
+\end{center}
+\vspace{0.4em}
+
+\begin{abstracten}
+The proposition that ``music is non-quantifiable'' has long been treated as a default
+premise of the music profession, and music has been habitually assigned to the categories
+of ``the art of humanity'' and ``the perception of the soul''. This paper argues that this
+proposition should first be made precise: is it ``music'' that cannot be quantified, or is
+it ``musical emotion'' that cannot be quantified? Having defined quantization as ``lossy
+compression through discretization and symbolization'', this paper proposes four criteria
+for quantifiable objects, of which the ternary relation ``object $\times$ purpose $\times$
+tolerance'' constitutes the core. On this basis it argues that music comprises two
+layers---the static and the dynamic: the layer of form and structure is static and
+quantifiable, whereas the layer of aesthetic appreciation and human-made relative dynamics
+is non-quantifiable, the two coexisting in a collaborative mode exemplified by
+``accompaniment track and human voice''. This paper further re-examines the definition of
+music, proposing that the ``regularity'' of music is ``the proportion of sound occupying a
+given period of time'', thereby establishing the ontological status of the temporal
+dimension in music. Citing Ji Kang's \textit{Sheng Wu Ai Yue Lun} (On the Absence of
+Sorrow and Joy in Sound) and Hanslick's theory of autonomy, it corroborates the
+human-made attribute of the aesthetic layer; and, with Zhu Zaiyu's twelve-tone equal
+temperament, Bach's \textit{The Well-Tempered Clavier}, the evolution of music notation,
+and the mechanism of composition (the isomorphism of motif and training), it argues for
+the quantifiability of composition and arrangement. Finally, this paper reveals the
+institutional roots of the absence of quantification consciousness---the model of oral
+transmission, the dislocation of ``right/wrong'' evaluation, and the imbalance of
+disciplinary construction---and looks forward to the significance for AI music arrangement
+of a layered quantization scheme (absolute coordinates at the structural layer, explicit
+tolerance at the aesthetic layer).
+\end{abstracten}
+
+\keywords{music quantification; ontology of sound; temporal structure;
+aesthetics of music; layered quantization; artificial intelligence composition}
+
+\newpage
+% ===========================================================================
+% Table of contents
+% ===========================================================================
+{\sffamily\bfseries\fontsize{14}{17}\selectfont
+ \begin{center}Contents\end{center}}
+\vspace{0.6em}
+\renewcommand{\contentsname}{}
+\vspace{-3.2em}
+\tableofcontents
+\newpage
+
+% ===========================================================================
+% Body
+% ===========================================================================
+\section{Introduction: Statement of the Problem}
+
+In the traditional conception of music, ``music is non-quantifiable'' is an almost
+self-evident axiom. We habitually assign music to ``the art of humanity'' and ``the
+perception of the soul'', as though music would cease to be music the moment a scale and a
+grid were applied to it. This preconception is so firmly entrenched that the entire
+profession's digitalization---from notation software to the digital audio workstation
+(DAW)---has had to proceed cautiously, under the defense of ``artistry''.
+
+Yet the present author, for all his shallowness, holds that this axiom itself deserves to
+be questioned: when we say that ``music is non-quantifiable'', is it ``music'' that cannot
+be quantified, or is it ``musical emotion'' that cannot be quantified? These two
+propositions point to entirely different objects: the former concerns the ontological
+attributes of the organization of sound, the latter the psychological effects upon the
+listening subject. To conflate the two is precisely the most fundamental dislocation in the
+``non-quantifiable'' work of music.
+
+The argumentative path of this paper is as follows: first, it defines ``quantization'' and
+the criteria for quantifiable objects; it then argues that music comprises a quantifiable
+and a non-quantifiable layer, and that the two coexist collaboratively; it goes on to
+re-examine the definition of music and establish the ontological status of the temporal
+dimension; thereafter, taking music history and compositional practice as evidence, it
+examines the quantifiability of composition and arrangement; and finally it reveals the
+institutional roots of the absence of quantification consciousness and looks forward to a
+feasible scheme of layered quantization.
+
+\section{What Is Quantization: Conceptual Definition and Criteria}
+
+\subsection{The Definition and Structure of Quantization}
+
+From a professional standpoint, quantization $=$ the process of mapping a continuous (or
+high-cardinality) set of objects onto a discrete (countable) set of symbols. It is usually
+composed of three structural components. First, the source set---a continuous domain or a
+high-resolution domain, such as a continuous stretch of time or a continuous axis of
+pitch. Second, the partition---cutting the source set into mutually disjoint units, each
+unit being called a ``bin''. Third, the mapping rule---each bin is assigned a
+representative symbol (usually its center or centroid), and thereafter all elements
+falling into that bin are referred to by that symbol.
+
+Quantization is therefore never one thing but a conspiracy of two: discretization
+(cutting) plus symbolization (naming). The cutting must also yield something that can be
+called by name before quantization is complete. And its essence is a kind of ``lossy
+compression''---compressing the uncountable into the countable, at the price of flattening
+out the differences within each bin. Indeed, human cognition is itself a grand
+quantization: the senses are a continuous stream, concepts are the bins that have been
+cut, and the word ``red'' is nothing more than the centroid symbol of a million spectra of
+red.
+
+\subsection{Criteria for Quantifiable Objects}
+
+Anything quantifiable must simultaneously satisfy four criteria. First, there must exist a
+structure of difference---there must be comparable distances or relations of equivalence
+among the objects; where not even ``resemblance'' can be spoken of, there is nothing to
+cut. Second, there must exist topology/adjacency---the partition must respect
+``neighborhood''; things within a bin should be more similar to one another than to things
+in other bins, otherwise the partition is arbitrary hacking. Third, there must be a
+tolerable tolerance---the differences within a bin are immaterial to the given purpose.
+This criterion is the most crucial: quantifiability is never an attribute of the object
+itself, but a relation among ``object $\times$ purpose $\times$ tolerance''. Fourth, the
+partition must be stable and reproducible---quantizing the same object ten times must
+yield the same symbol, and the mapping rule must be a determinate function.
+
+Strictly speaking, then, there is no such thing as ``a naturally quantifiable thing'';
+there is only ``an object that, under a certain tolerance and for a certain purpose, can be
+finitely partitioned''.
+
+\subsection{The Pathology of the Non-Quantifiable}
+
+Turning to the non-quantifiable, its pathology is equally clear and has roughly three
+aspects. First, difference is equally fatal at every scale---no tolerance can be safely
+applied. Zeno's arrow paradox is its type case: cut motion into instants and motion
+vanishes on the spot; the very ``aliveness'' of motion lies in continuity itself. Second,
+meaning lives in the whole, not in the part---to cut is to kill, as with the breathing of
+a musical phrase or the savor of a line of poetry. Third, there is no stable
+identity---each occurrence is different, so it can neither be compared nor classified.
+
+\subsection{Four Re-Positionings of the Non-Quantifiability Thesis}
+
+The three aspects listed in \S2.3 answer the question ``what is non-quantifiable?''; what
+is to be dealt with here is another question: how far each of the several common arguments
+that assert ``music is non-quantifiable'' ``holds, and up to which layer''. The two are
+two sides of the same coin, yet their conclusions differ---the former speaks of the
+properties of the object, the latter of the boundary of an argument. Once each is
+re-positioned, the layered thesis of this paper acquires its entry point.
+
+\textbf{First, the continuum argument.} This view holds that quantization presupposes
+partition, whereas the things that matter most in music---portamento, crescendo, rubato
+---are all continua; once they are cut into discrete units, continuity itself is lost. The
+part of this argument that holds is incontestable: a continuum cannot be discretized
+``losslessly''. But it then oversteps its boundary---``something will be lost'' does not
+equal ``it cannot be cut''; it only means that one must ask further: what exactly is lost,
+and does it fall within the tolerance of the given purpose? This question is precisely the
+substance of criterion three. Indeed, human cognition is itself a grand quantization: what
+the senses receive is a continuous spectrum, and the word ``red'' is merely one symbol
+into which a million kinds of red have been compressed. Were the continuum argument
+tenable, the word ``red'' ought not to exist either.
+
+\textbf{Second, the holistic argument.} This view holds that the meaning of music lives in
+an entire phrase or even an entire work, and that to cut is to kill, as with the breathing
+of a phrase or the savor of a melody. This argument conflates ``the attribution of
+meaning'' with ``the existence of the object''. A musical phrase can perfectly well be
+recorded in its entirety as a set of coordinates with definite starting and ending
+instants---each of its notes has a determinate position, and this does not prevent it from
+being grasped by the listener as a whole; the savor is an effect produced in the listener
+when confronted with this set of coordinates, and it belongs to the receiving end, not to
+the organization of sound itself. Wholeness does not exclude coordinatizability; it merely
+imposes one demand upon the coordinate system: it must be able to accommodate
+``relations'', and not merely points that are isolated from one another.
+
+\textbf{Third, the subjectivity argument.} This view holds that the emotions aroused by
+music are private and incommensurable, and hence cannot be quantified. This argument is
+precisely the specimen of the dislocation pointed out at the opening of this paper---it
+discusses ``the psychology of the listener'' but uses that to pass judgment on ``music''.
+Whether emotion is quantifiable is another question (psychology measures it along two
+dimensions, valence and arousal, which is itself an attempt at quantification), but
+whatever the answer, it cannot be used to infer backwards that the organization of sound is
+unmeasurable. To put it more cautiously: even if one concedes that the world of emotion
+refuses a scale, that only draws a boundary for the aesthetic layer and has nothing to do
+with the structural layer.
+
+\textbf{Fourth, the historicity argument.} This view holds that the value of music shifts
+with the times, that yesterday's dissonance is today's norm, and that consequently no
+stable quantity exists. This argument refutes ``the constancy of aesthetic standards'', not
+``the measurability of structure''. The same major triad in 1722 and today: its pitch
+relations, its ratios of duration, and its spectral structure are no different; what
+changes is the ``evaluation'' of it, not the thing itself. Historicity is not only no
+obstacle, it precisely confirms the layered thesis of this paper: the structural layer is
+stable, the aesthetic layer flows.
+
+Viewed together, the four arguments share one and the same structure: each holds at ``a
+certain layer'', yet each is used to support a ``cross-layer'' conclusion. The reason this
+transgression long went unnoticed is that the word ``music'' was never taken apart in the
+discussion---it refers simultaneously to the organization of sound and to auditory
+experience, so that a claim about the latter was smoothly read as a claim about the former.
+Once these four arguments are each re-positioned in the aesthetic layer, they no longer
+conflict with the quantifiability of the structural layer; the layering proposed in
+Section 3 of this paper exists precisely to give each of them the place where it belongs.
+
+\section{The Dialectic of Musical Quantifiability: Stasis and Motion}
+
+\subsection{A Rebuttal of the ``Performance Is Unrepeatable'' Thesis}
+
+Following the logic above, someone may ask directly: music is indisputably a
+non-quantifiable thing, so what are you discussing? It is true that even the finest
+performer cannot produce two identical performances---this is physically impossible. But
+does that prove that music is non-quantifiable? The present author thinks not. If music
+really were non-quantifiable, how then is one to explain the efficacy of a DAW and of any
+notation software in recognizing and locating notes? This is an obvious fact, and it cannot
+be dismissed with a blanket judgment. In philosophical terms, we must see both the static
+side of things and the dynamic side of things.
+
+\subsection{The Layering of Music: Structural Layer and Aesthetic Layer}
+
+What, then, is stasis for music, and what is motion? The present author's conclusion is
+this: with respect to ``the form and structure of music'', music is static and
+quantifiable; with respect to ``the aesthetics of music'' and to ``human-made relative
+dynamics'', music is non-quantifiable.
+
+This is not difficult to understand. Suppose you record a note in a DAW or in notation
+software; the next time it is played back, that note will be sitting exactly where it
+belongs, obediently; whereas if a human plays it, a slight deviation may appear---and it is
+precisely this ``deviation'' that embodies ``humanization''. The drift between the key and
+the grid is exactly the trace of the performer's breathing.
+
+\subsection{The Collaboration of Stasis and Motion: The Case of ``Accompaniment Track and Human Voice''}
+
+Must the two, then, be irreconcilable? The answer is obviously no. Anyone who has sung
+knows the experience of singing along with an accompaniment track: since the track is
+static, the singer spontaneously moves relative to it in order to maintain a relative
+balance; and between a live piano accompanist and a singer there likewise exists a tacit
+balance, failing which the whole performance would simply fall apart. It follows that
+stasis is not the enemy of motion but the coordinate system in which motion can occur and
+remain ordered: it is precisely because the grid is constant that deviation becomes
+meaningful; it is precisely because coordinates exist that breathing has a place. Stasis
+and motion each have their own office and each completes the other.
+
+\section{A Re-Examination of the Ontology of Music: The Temporal Dimension}
+
+\subsection{A Review of the General Definition of Music}
+
+The descriptions of music in music-theory textbooks are not wrong, but for a long time we
+have overlooked one key question: what is music? General explanations run, for example,
+that ``music is an art form and cultural activity that expresses thought, emotion and
+social life through the organization of regular sound waves'', or that ``music is an
+auditory art constituted from the elements of pitch, dynamics, duration and timbre through
+the forms of rhythm, melody and harmony''. These accounts are all correct, but note one
+phrase in them---``the organization of regular sound waves'': what, then, is this
+``regularity''? And as for the so-called ``use of the elements of pitch, dynamics, duration
+and timbre'', what is this series of ``arts''?
+
+\subsection{Regularity: The Proportion of Sound Occupying a Given Period of Time}
+
+The present author's view is this: this regularity is ``the proportion of sound occupying a
+given period of time''. The sentence looks abstract but is in fact easy to grasp: the
+duration of a concert is always relatively fixed---two hours' worth of content, even with
+small errors, cannot be compressed into half an hour unless an abnormal accident occurs.
+And the pitches, the rests, and the different instruments within it are nothing more than
+``quantifiable subsets within time''.
+
+From this one may draw a conclusion that has long been overlooked: time is the unit that
+truly possesses ontological status in music. All sonic elements---pitch (the distribution
+of frequency within a unit of time), timbre (the spectrum evolving over time), harmony (the
+vertical slice at a single instant), rhythm (the distribution of density of sound along
+the time axis)---can all be projected onto the time axis. Music is not a set of sounds, but
+the organization of sounds in time.
+
+\subsection{The Distinction between the Ontology of Music and the ``Human'' Carrier}
+
+Someone may say that such a definition would break the ``aesthetics'' and ``artistry'' of
+music. The present author holds that this worry does not stand, that the two do not
+conflict, and that this is a simple question long overlooked. Let us shift our angle: the
+existing sound-source systems and DAW arranging equipment are already quite
+sophisticated---so do the musical works an arranger produces with a DAW really lack
+``aesthetics'' and ``artistry''? Obviously not. Since the DAW itself is a tool for
+quantifying music that is acknowledged as such by the profession, whence comes the talk of
+``breaking aesthetics and artistry''? We cannot say that listening to music through
+headphones does not count as appreciation while attending a concert does---that is plainly
+illogical, because the ``ontology of music'' remains the medium of ``sound''; whether it is
+produced by a human concerns only ``the process itself'', not ``the final result''.
+
+The most blunt way to put the question is this: when the audience pays, are they
+``appreciating the music'' or ``appreciating the producer of the music''? If music were
+defined solely by its producer, then indeed this misconception could be explained---the
+so-called lack of ``aesthetics'' and ``artistry'' is nothing but the result of aesthetics
+having been bound to the carrier ``human''.
+
+Anyone who has studied philosophy will be familiar with this sentence: regularity does not
+shift with the human carrier; it can be actively made use of, but it by no means shifts
+with individual will. By the same token, since music has long been defined as ``the
+organization of regular sound waves'', does imposing the carrier ``human'' upon that
+regularity not appear excessively forceful, and contrary to philosophy itself?
+
+\section{On the Absence of Sorrow and Joy in Sound: The Human-Made Attribute of the Aesthetic Layer}
+
+\subsection{The Anticipation in Ji Kang's \textit{Sheng Wu Ai Yue Lun}}
+
+If one starts from ``the form of quantization'', then ``music is the manifestation of the
+soul''---at first hearing there is nothing wrong with this, but it overlooks one point:
+the human psyche has nothing to do with music itself. This idea was already clearly
+described long ago in Ji Kang's aesthetic work \textit{Sheng Wu Ai Yue Lun} (On the Absence
+of Sorrow and Joy in Sound)\footnote{Ji Kang [Three Kingdoms, Wei]: \textit{Sheng Wu Ai
+Yue Lun}, [to be verified: edition consulted, e.g. Dai Mingyang, \textit{Collated and
+Annotated Collected Works of Ji Kang}, Beijing: People's Literature Publishing House,
+1962], p.~[X].}. Ji Kang holds that ``the mind and sound are manifestly two things'': sound
+is an objectively existing natural acoustical phenomenon, whereas sorrow and joy are
+feelings produced after the spirit has been stirred, and there is no causal relation
+between the two. That is to say, music itself carries no sorrow or joy; sorrow and joy
+exist in the listener.
+
+\subsection{A Thought Experiment at the Extremes}
+
+We take as given that the premise of music being appreciated is that the person is in a
+calm state free of external interference. But human mental activity is in essence
+pluralistic, and we cannot overlook the factor of extreme values. Let us perform a thought
+experiment: suppose one person wins a million yuan in the lottery and another loses a
+million yuan; would playing ``cheerful music'' to the one who lost money really make him
+feel joy? Would playing ``sad music'' to the one who gained really make him sad? The
+answer is obvious.
+
+It should be added that the ``irrelevance'' spoken of here is more precisely expressed as
+``not necessarily corresponding'': music can induce an emotional response but cannot
+stipulate an emotional response---music is the occasion of emotion, not the carrier of
+emotion. This tightening of the wording does not weaken Ji Kang's position; on the
+contrary, it gives it firmer ground.
+
+\subsection{A Historical Echo: The Dispute between Autonomy and Heteronomy}
+
+In the history of Western music aesthetics this idea is no isolated case. Hanslick, in
+\textit{On the Musically Beautiful}\footnote{Eduard Hanslick [Austria]: \textit{On the
+Musically Beautiful: A Contribution towards the Revision of the Aesthetics of Music},
+translated by Yang Yezhi, Beijing: People's Music Publishing House, [to be verified: year
+of publication], p.~[X].}, published in 1854, advanced the famous theory of autonomy: the
+beauty of music lies not in the expression of emotion but in ``the moving forms of tones''
+themselves; against this, the emotional aesthetics of Romanticism (heteronomy) maintains
+that the beauty of music lies in the expression of emotion. The two camps have argued for
+nearly two hundred years without resolution. Seen through the ``stasis/motion'' layering
+of this paper, the two territories in fact each find their proper place: the structural
+layer is autonomous---form is beauty, stasis is quantifiable; the aesthetic layer is
+heteronomous---it varies from person to person, and motion is not quantifiable. This paper
+has no intention of mediating between the two positions, but only of drawing their
+boundaries for them: from now on there is no need to argue further, each simply returns to
+its own place.
+
+\section{An Examination of the Quantifiability of Composition and Arrangement}
+
+\subsection{Historical Evidence: From Zhu Zaiyu to Music Notation}
+
+Let us return to a practical question: traditional composition and arrangement already have
+so long a history---is ``composition and arrangement'' itself quantifiable? The answer can
+still follow the reply given above.
+
+From the historical angle: Zhu Zaiyu of China, in the twelfth year of the Wanli reign
+(1584), divided the octave equally into twelve semitones by precise calculation, the
+interval ratio of each semitone being the twelfth root of 2 (approximately 1.059463),
+thereby realizing equal temperament in the true mathematical sense\footnote{Zhu Zaiyu
+[Ming]: \textit{Lü Xue Xin Shuo} (A New Account of the Study of Temperament), [to be
+verified: annotator, publisher, year of publication], p.~[X]; \textit{Lü Lü Jing Yi}
+(Essential Principles of Pitch Pipes), [to be verified: as above or noted separately],
+p.~[X].}---and this calculation was carried out by extracting roots on an eighty-one-rod
+abacus, accurate to 24 decimal places. Bach's \textit{The Well-Tempered Clavier} (Volume
+One, 1722)\footnote{J. S. Bach [Germany]: \textit{The Well-Tempered Clavier}, Volume One
+(BWV 846--869), [to be verified: edition consulted, e.g. Leipzig: Bärenreiter, 1950],
+p.~[X].} in turn confirmed the feasibility of equal temperament from the standpoint of
+compositional practice. As for notation, whether it be the traditional Chinese
+\textit{jianzipu} (abbreviated-character tablature) or the Western neumes, the four-line
+staff, and even the five-line staff, all have labored on behalf of the quantifiability of
+music. But the present author holds that we should not simply classify notation as
+``for the sake of preservation and transmission''; we should return instead to quantization
+and science itself---notation is in essence the symbolization of the temporal structure and
+the pitch structure of music, that is, the first practical realization of quantization.
+
+\subsection{The Mechanism of Creation: Motif, Training and Generation}
+
+From the angle of creation: one factor truly cannot be excluded from composition---the
+``motif''. In music we often attribute the ``motif'' to the composer's ``flash of
+inspiration''; but is a flash of inspiration really mysticism? The present author thinks
+not. This is very similar to the Transformer mechanism of modern artificial
+intelligence\footnote{A. Vaswani, N. Shazeer, N. Parmar, et al., ``Attention Is All You
+Need'', \emph{Advances in Neural Information Processing Systems 30 (NeurIPS 2017)}, 2017,
+pp.~5998--6008.}: the human composer, too, can realize the so-called ``motif'' only after
+undergoing a great deal of musical accumulation and training; even Mozart, a child prodigy
+in music, could not do without a great deal of musical accumulation; and to ask someone who
+has never even touched a keyboard to complete a symphony at once would almost violate the
+laws of learning. From the rational angle, the so-called ``four pillars'' of
+composition---harmony, musical form, counterpoint and orchestration---all have a great body
+of corresponding logic, books and transmissible systems of knowledge, failing which the
+whole musical fabric would fall into utter confusion; even modernist composition is a
+deliberate arrangement. Indeed, twentieth-century serialism (such as Schoenberg's
+twelve-tone technique and Boulez's integral serialism) pushed the quantifiability of music
+to an extreme---pitch, duration, dynamics and timbre were all fully parameterized---and
+the world does not on that account deny that it is music.
+
+\subsection{The Operability of Structure and the Attribution of ``Good and Bad''}
+
+From the mathematical angle, this can still be explained as ``the proportion of sound
+occupying a given period of time''. A set of numbers is not judged to have vanished
+because you replace 0 with 100; likewise, music does not become wholly invalid because you
+replace a triad with a seventh chord somewhere within it. More rigorously: structural
+operations do not destroy the validity of music as an organization of sound; they only
+change its aesthetic effect---and the aesthetic effect belongs precisely to the
+non-quantifiable layer of motion.
+
+At this point someone is bound to ask: how, then, is one to judge whether it is good or
+not? Such a question still falls within the jurisdiction of ``the aesthetics of music'' and
+of ``human-made relative dynamics'', and has no connection whatever with the structure of
+music itself. For instance, one cannot say that Beethoven's \textit{Fate} is necessarily
+better written than \textit{The Little Painter}: structurally speaking, the musical
+structure of \textit{Fate} is far more complex, but structural complexity does not equal
+``good''; it depends on who the listener is---for a child, \textit{The Little Painter} obviously
+has greater educational value and is more readily accepted by children. The crux of the
+question returns once again to ``the aesthetics of music'' and ``human-made relative
+dynamics'': because the quantified musical structure does not shift with human will, the
+structure itself is neither good nor bad.
+
+\section{The Institutional Roots of the Absence of Quantification Consciousness}
+
+\subsection{Oral Transmission and the Dislocation of ``Right/Wrong'' Evaluation}
+
+Since music is quantifiable, and quantification consciousness ought to be an intrinsic gene
+of music, why has this question been so hard to discover for so long? Seen from the angle
+of teaching methods and of social existence, music has long operated by way of ``oral
+transmission and heart-to-heart instruction'', and over time the very notion of
+``quantification'' has imperceptibly disappeared. Take an example: you play here, and the
+teacher says ``right''; you play in another place, and the teacher says ``wrong''. But on
+the argument above, musical structure itself has no right or wrong, and the aesthetic layer
+is merely a thousand faces for a thousand people---so where does ``right and wrong'' come
+from? It is evident that the educational system has packaged aesthetic preference as
+``right and wrong'' for the purposes of assessment and grading; this is an institutional
+dislocation: the structure that ought to be quantified has not been quantified, while the
+aesthetics that ought not to be quantified has been quantified into a score.
+
+\subsection{A Thought Experiment on Machine Judging}
+
+Can the aesthetic layer, then, really be quantified? If so-called ``master'' performers
+were truly taken as the reference, the best approach would seem to be to have them record
+once onto a MIDI keyboard, after which all assessment would hold the student's performance
+up against the machine and compute the difference. But this would plainly make artistic
+expression lose its selfhood, and is utterly inadvisable. It is worth noting that this
+thought experiment confirms the layering of this paper from the negative side: for a
+machine to evaluate ``aesthetics'' is absurd, yet for a machine to evaluate ``structure''
+is perfectly fair. The conclusion is not ``machines are unusable'' but ``machines may be
+used only at the layer where they belong''.
+
+\subsection{Disciplinary Construction and the Absence of Interdisciplinary Speculation}
+
+From the perspective of academic and social planning: music has long been a branch of the
+liberal arts and has to some extent lost the genes of the sciences, which has weakened the
+capacity for interdisciplinary speculation. A clarification is needed here: this is not an
+argument that music should ``become'' a science, but rather that music simultaneously
+possesses a computable structural layer, and that this layer requires the participation of
+scientific thinking---it is disciplinary intersection, not disciplinary replacement.
+Second, when students spend a great deal of time on the adjustment of aesthetic
+preferences, time being an impartial unit, their understanding at the structural layer
+correspondingly decreases, and naturally there is no occasion for the possibility of
+encountering additional knowledge and combining it with music.
+
+\section{Conclusion and Prospects: Toward a Layered Quantization of Music}
+
+\subsection{The Systematization of Four Kinds of Dislocation}
+
+Surveying the paper as a whole, the word ``dislocation'' can run through it from beginning
+to end: what this paper reveals is in fact four mutually entangled kinds of dislocation, as
+shown in Table \ref{tab:cuowei}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Four kinds of dislocation in the ``non-quantifiable'' work of music}
+  \label{tab:cuowei}
+  \begin{tabular}{p{2.6cm}p{8.0cm}p{3.2cm}}
+    \toprule
+    \thd{Type of dislocation} & \thd{Content} & \thd{Layer involved} \\
+    \midrule
+    Definitional dislocation & Conflating ``musical emotion is non-quantifiable'' with ``music is non-quantifiable'' & Propositional layer \\
+    \addlinespace
+    Aesthetic dislocation & Binding aesthetic value to the carrier ``human'', defining music by its producer & Ontological layer \\
+    \addlinespace
+    Technical dislocation & Conflating the structural layer with the aesthetic layer, either killing music with coarse quantization or abandoning quantization out of fear of difficulty & Methodological layer \\
+    \addlinespace
+    Institutional dislocation & Transmitting by ``oral instruction'', evaluating aesthetics by ``right/wrong'', and isolating scientific thinking by disciplinary construction & Educational and social layer \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Prospects for a Layered Quantization Scheme}
+
+On the basis of the argument above, the quantization of music should not be ``chopping music
+to pieces'' but ``establishing a coordinate system for music''. A feasible scheme is
+layered quantization: at the structural layer, every sonic event is located by absolute
+temporal coordinates---the coordinates themselves lose no information, because they are
+only a reference; at the aesthetic layer, the non-quantifiable breathing, deviation and
+minute difference are allowed to survive explicitly in the form of ``tolerance
+parameters'' between the coordinates---deviation is no longer an error but the evidence
+that music is ``alive''.
+
+The significance of this scheme for AI music arrangement lies in this: the current weakness
+of music AI is not a lack of data or of computing power, but the piling of computing power
+onto the wrong coordinate system. Once the structural layer obtains precise absolute
+coordinates and the aesthetic layer obtains explicit tolerance expressions, AI will no
+longer need to ``imitate'' music but can ``write'' it. Admittedly, this remains an
+unfinished undertaking; this paper merely provides it with a foundation in ontology.
+
+By way of conclusion, the present author would characterize himself in one sentence: this
+matter is like climbing high to gaze afar---I dare not claim to have reached the summit, I
+only wish that a single step's advance might spare those who come after me the trouble of
+climbing. As for the edge in it, the ancients already said it before me---``I do not regret
+that the ancients did not see me; I regret that the ancients did not see my wildness.''
+
+\end{document}

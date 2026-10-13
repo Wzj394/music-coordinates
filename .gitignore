@@ -1,0 +1,44 @@
+# ============ LaTeX 编译中间产物 ============
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.xdv
+*.nav
+*.snm
+*.vrb
+
+# 编译测试残留（不属于仓库内容）
+_compiletests.*
+
+# ============ 字体：不入库 ============
+# 思源宋体的静态实例由 tools/make_static_instances.py 从系统变量字体生成，
+# 单个约 14 MB，两份共 28 MB，且属第三方字体资产，故不纳入版本库。
+# 首次编译【中文版 paper.tex】前请先运行：python tools/make_static_instances.py
+#
+# 注意：英文版（paper.en.tex）走 musepaper-en.sty，不含任何 CJK 机制，
+# 不需要中文字体，无需上述步骤即可直接 xelatex 编译。
+fonts/
+_shared/fonts/
+
+# ============ pandoc 转换的临时文件 ============
+_body.tex
+_body.md
+_app.tex
+_app.md
+
+# ============ Python ============
+__pycache__/
+*.pyc
+
+# ============ 系统 ============
+.DS_Store
+Thumbs.db
+desktop.ini

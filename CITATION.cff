@@ -1,0 +1,86 @@
+cff-version: 1.2.0
+message: "若使用本仓库内容，请按下述条目引用。 / If you use this repository, please cite it as below."
+type: dataset
+title: "Mozun · Music Quantification and the Absolute Spatiotemporal Coordinate System"
+abstract: >-
+  中英双语的音乐量化研究仓库。中文原稿两篇：一篇论证音乐的可量化性及结构层／审美层之分；
+  一篇给出音乐事件的绝对时空坐标系（MATCS）及其变拍号闭式、退化性质与事件判据。
+  两篇论文均提供英文译本（paper.en.pdf / README.en.md），另有面向 AI Agent 的工程实践文档。
+  / A bilingual repository. Two Chinese papers: one argues for the quantifiability of
+  music and the structural/aesthetic layer distinction; the other presents the Absolute
+  Spatiotemporal Coordinate System (MATCS) with its piecewise closed form for variable
+  time signatures, its degeneracy property, and a unified event criterion. English
+  translations of both papers are included, together with engineering documentation
+  for AI agents.
+authors:
+  - family-names: "Wang"
+    given-names: "Zijian"
+    alias: "MOZUN"
+    email: "368164331@qq.com"
+    affiliation: "Core Theory Project Group (MozunStudio) / 核心理论项目组"
+contact:
+  - family-names: "Wang"
+    given-names: "Zijian"
+    email: "368164331@qq.com"
+license: CC-BY-4.0
+keywords:
+  - music quantification
+  - absolute tick
+  - MATCS
+  - spatiotemporal coordinate system
+  - variable time signature
+  - event criterion
+  - voice separation
+  - Music Information Retrieval
+  - DAW automation
+  - AI agent
+  - 音乐量化
+  - 绝对 Tick
+  - 变拍子
+  - 事件判据
+repository-code: "https://github.com/Wzj394/music-coordinates"
+references:
+  - type: article
+    title: "对于音乐“非量化”工作的错位与反思"
+    abstract: >-
+      Argues that music is quantifiable up to, but not including, the aesthetic layer;
+      proposes a layered account of musical quantification. Chinese original with an
+      English translation.
+    authors:
+      - family-names: "Wang"
+        given-names: "Zijian"
+        alias: "MOZUN"
+    year: 2026
+    languages:
+      - zh
+      - en
+    keywords:
+      - 音乐量化
+      - 声音本体论
+      - 分层量化
+      - music quantification
+      - musical ontology
+  - type: article
+    title: "绝对时空坐标系：音乐事件的精确量化与全局定位"
+    abstract: >-
+      Presents MATCS: a coordinate system that maps bar:beat positions to a globally
+      unique absolute tick under mid-piece time signature changes, with a piecewise
+      closed form, a degeneracy theorem, a unified event criterion, and cross-implementation
+      verification against REAPER's production time map (82/82 positions agree).
+      Chinese original with an English translation.
+    authors:
+      - family-names: "Wang"
+        given-names: "Zijian"
+        alias: "MOZUN"
+    year: 2026
+    languages:
+      - zh
+      - en
+    keywords:
+      - MATCS
+      - 绝对 Tick
+      - 变拍子
+      - 事件判据
+      - absolute tick
+      - variable time signature
+      - event criterion

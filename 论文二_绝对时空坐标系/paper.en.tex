@@ -487,7 +487,7 @@ Section \ref{sec:domain} gives a quantitative characterisation of that boundary.
 % ---------------------------------------------------------------------------
 %  Core chapter: the paper has exactly one core; every chapter below is a corollary of it
 % ---------------------------------------------------------------------------
-\section{The absolute time coordinate system: a position representation independent of the time signature}
+\section{The absolute spatiotemporal coordinate system: a position representation independent of the time signature}
 \label{sec:coord}
 
 This section is the technical foundation of the whole paper. Every conclusion in the
@@ -2119,7 +2119,7 @@ no value.
 \subsection{System composition}
 
 Following the definitions of sections \ref{sec:coord}--\ref{sec:semantic}, the system
-consists of four parts: the absolute time coordinate system, the TPB preset mechanism,
+consists of four parts: the absolute spatiotemporal coordinate system, the TPB preset mechanism,
 the bidirectional mapping engine, and the semantic encapsulation layer.
 
 \subsection{Misalignment of the counting origin}
@@ -2269,7 +2269,7 @@ are listed in order of priority.
 
 \section{Conclusion}
 Starting from an observation of the DAW interface, this paper constructs the absolute
-time coordinate system MATCS. The main conclusions are:
+spatiotemporal coordinate system MATCS. The main conclusions are:
 
 \begin{enumerate}[leftmargin=2.2em,itemsep=0.15em,topsep=0.2em]
   \item The position of a musical event can be translated into an absolute tick value
@@ -2403,7 +2403,7 @@ def tick_to_pos(axis, tick):
 \endhead
 \bottomrule
 \endlastfoot
-MATCS & Mozun Absolute Time Coordinate System, the absolute time coordinate system proposed in this paper \\
+MATCS & Absolute Spatiotemporal Coordinate System, the position representation proposed in this paper \\
 absolute tick & the tick count from the start of the project to that event, independent of the time signature, the tempo and the tonality \\
 empty event & an event whose pitch attribute is empty and which has explicit onset and offset times; a rest is one example \\
 event chain & the uninterrupted sequence formed by the end of each event meeting the start of the next \\

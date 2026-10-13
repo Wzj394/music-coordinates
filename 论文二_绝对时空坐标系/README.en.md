@@ -107,8 +107,8 @@ insufficient.
 
 ## Why this is a coordinate problem
 
-Push the analogy towards physical measurement: “the third centimetre of
-the second meter” is well defined — the ruler is fixed, and anyone
+Push the analogy towards physical measurement: “the $3$rd centimetre
+of the $2$nd meter” is well defined — the ruler is fixed, and anyone
 measuring at any time obtains the same result. Musical notation is not
 like that: “bar $2$, beat $3$” denotes a different tick length under
 $4/4$ and under $6/8$.
@@ -430,7 +430,7 @@ is required. Section [3.9](#sec:domain){reference-type="ref"
 reference="sec:domain"} gives a quantitative characterisation of that
 boundary.
 
-# The absolute time coordinate system: a position representation independent of the time signature
+# The absolute spatiotemporal coordinate system: a position representation independent of the time signature
 This section is the technical foundation of the whole paper. Every
 conclusion in the sections that follow can be derived directly from the
 three definitions given here (the TPB conversion base, the absolute
@@ -915,7 +915,7 @@ reference="tab:domain"} compares three classes of scenario.
 |:---|:---|:---|:---|
 | A single time signature | correct | correct (degenerate equivalence) | either one |
 | A few meter changes | fails | correct | the general form |
-| Ban-shi change / free meter (sanban) / dense meter change | fails | fails | a time-signature event table $+$ binary search |
+| Ban-shi change / free meter (sanban) / dense meter change | fails | fails | a time-signature event table + binary search |
 
 ### Parameter complexity
 
@@ -1242,7 +1242,7 @@ On the vertical axis a four-part choir (SATB) usually has a clear
 stratification of registers. Let $Y'$ be the vertical coordinate after
 octave normalisation; then a single simple threshold suffices for the
 coarse partition: $Y'$ above the threshold goes to the upper voice,
-$Y'$ below it to the lower voice.
+and those below the threshold to the lower voice.
 
 Take a passage of piano music as an example: the right-hand melody lies
 in the middle-high register and the left-hand accompaniment in the
@@ -1422,9 +1422,9 @@ musical-form structures, and the recursion can proceed indefinitely.
 a single section satisfies $S_A=\sum_j s_{aj}$ by itself, that is, one
 section can be divided into several subsections. Inductive step: assume
 the $k$-th layer holds, that is $p_i=\sum_j p_{ij}$; then repeating
-the same argument for each $p_{ij}$ gives the $(k+1)$-th layer.
-Hence one can recurse from the division of a movement down to periods,
-phrases and motives, and finally to individual notes. ◻
+the same argument for each $p_{ij}$ gives layer $k+1$. Hence one can
+recurse from the division of a movement down to periods, phrases and
+motives, and finally to individual notes. ◻
 
 This theorem means that the $A$–$B$–$A$ structure of a symphony
 and the $a$–$b$–$a'$ structure of a $16$-bar melody are
@@ -1772,9 +1772,9 @@ sentence”; **the boundary of a melody is not the barline but the point
 where the vertical value changes**.
 
 **(iv) Pitch layout.** The range of the reference sample is C4–E6 (two
-octaves $+$ a major third), dense in the high register, with the
-chromatic note G#5 appearing in bar $14$; the range of the model
-output is C4–C6, entirely diatonic.
+octaves + a major third), dense in the high register, with the chromatic
+note G#5 appearing in bar $14$; the range of the model output is
+C4–C6, entirely diatonic.
 
 **(v) Summary of the core gaps.** See Table
 [26](#tab:case2){reference-type="ref" reference="tab:case2"}.
@@ -1783,9 +1783,9 @@ output is C4–C6, entirely diatonic.
 
 |  |  |  |
 |:---|:---|:---|
-| Duration diversity | uniform (quarter $+$ half) | rich (dotted, eighth, non-standard durations) |
-| Phrase structure | divided by barlines | cross-bar motifs $+$ phrase hierarchy |
-| Pitch layout | symmetrical and regular | arch shape $+$ high-register breakthrough $+$ chromatic notes |
+| Duration diversity | uniform (quarter + half) | rich (dotted, eighth, non-standard durations) |
+| Phrase structure | divided by barlines | cross-bar motifs + phrase hierarchy |
+| Pitch layout | symmetrical and regular | arch shape + high-register breakthrough + chromatic notes |
 | Rhythmic subdivision | none | several dotted and eighth-note transitions |
 | Mathematical precision | standard durations only | every non-standard duration can be converted exactly into ticks |
 
@@ -1940,7 +1940,7 @@ Following the definitions of sections
 [3](#sec:coord){reference-type="ref"
 reference="sec:coord"}–[7](#sec:semantic){reference-type="ref"
 reference="sec:semantic"}, the system consists of four parts: the
-absolute time coordinate system, the TPB preset mechanism, the
+absolute spatiotemporal coordinate system, the TPB preset mechanism, the
 bidirectional mapping engine, and the semantic encapsulation layer.
 
 ## Misalignment of the counting origin
@@ -2115,7 +2115,8 @@ this paper; they are listed in order of priority.
 # Conclusion
 
 Starting from an observation of the DAW interface, this paper constructs
-the absolute time coordinate system MATCS. The main conclusions are:
+the absolute spatiotemporal coordinate system MATCS. The main
+conclusions are:
 
 1.  The position of a musical event can be translated into an absolute
     tick value independent of the time signature, the tempo and the
@@ -2308,8 +2309,8 @@ def tick_to_pos(axis, tick):
 &\
 \
 &\
-MATCS & Mozun Absolute Time Coordinate System, the absolute time
-coordinate system proposed in this paper\
+MATCS & Absolute Spatiotemporal Coordinate System, the position
+representation proposed in this paper\
 absolute tick & the tick count from the start of the project to that
 event, independent of the time signature, the tempo and the tonality\
 empty event & an event whose pitch attribute is empty and which has

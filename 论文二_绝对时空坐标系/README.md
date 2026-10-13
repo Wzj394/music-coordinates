@@ -370,7 +370,7 @@ MIDI）为对象，输出为确定性坐标。二者不构成竞争：
 [3.9](#sec:domain){reference-type="ref" reference="sec:domain"}
 节将给出这一边界的定量刻画。
 
-# 绝对时间坐标系：一个与拍号无关的位置表示
+# 绝对时空坐标系：一个与拍号无关的位置表示
 本节是全篇的技术基座。后续各节的全部结论都可以从本节的三个定义 （TPB
 换算基准、绝对 Tick、双向映射）直接导出，不引入新的独立假设。
 因此本节也同时承担界定边界的责任：凡本坐标系不成立之处，
@@ -1611,7 +1611,7 @@ reference="tab:assess"}。
 按第 [3](#sec:coord){reference-type="ref"
 reference="sec:coord"}–[7](#sec:semantic){reference-type="ref"
 reference="sec:semantic"} 节的定义，系统由四部分构成：
-绝对时间坐标系、TPB 预设机制、双向映射引擎、语义封装层。
+绝对时空坐标系、TPB 预设机制、双向映射引擎、语义封装层。
 
 ## 计数起点错位
 
@@ -1744,7 +1744,7 @@ $$](#sec:case){reference-type="ref"
 
 # 结论
 
-本文从宿主软件的界面观察出发，构建了绝对时间坐标系 MATCS， 主要结论为：
+本文从宿主软件的界面观察出发，构建了绝对时空坐标系 MATCS， 主要结论为：
 
 1.  音乐事件的位置可被翻译为与拍号、速度、调性无关的绝对 tick 值，
     其形式由式 [$$
@@ -1889,7 +1889,8 @@ def tick_to_pos(axis, tick):
 &\
 \
 &\
-MATCS & Mozun Absolute Time Coordinate System，本文提出的绝对时间坐标系\
+MATCS & 绝对时空坐标系（Absolute Spatiotemporal Coordinate
+System），本文提出的位置表示体系\
 绝对 Tick & 自工程起点至该事件的 tick 计数，与拍号、速度、调性无关\
 空事件 & 音高属性为空、具有明确起止时刻的事件；休止即其一例\
 事件链 & 相邻事件终点与起点首尾相接构成的不间断序列\
